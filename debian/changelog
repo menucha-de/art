@@ -1,0 +1,11 @@
+art (1.0.1-1) unstable; urgency=medium
+ 
+  * Adds bind of hosts and resolve.conf
+ 
+ -- peraMIC <opensource@peraMIC.io>  Mon, 15 Feb 2021 16:40:37 +0100
+
+art (1.0.0-1) unstable; urgency=medium
+ 
+  * Initialization
+ 
+ -- peraMIC <opensource@peraMIC.io>  Mon, 10 Aug 2020 15:20:13 +0200

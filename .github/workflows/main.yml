@@ -1,0 +1,27 @@
+name: Build app
+
+on:
+  workflow_dispatch:
+    inputs:
+      arch:
+        description: 'Architecture'
+        default: 'amd64 armhf'
+      dist:
+        description: 'Distribution'
+        default: 'buster'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+      - name: Build
+        id: build
+        uses: peramic/actions/build@v1
+        with:
+          arch: ${{ github.event.inputs.arch }}
+          dist: ${{ github.event.inputs.dist }}
+          script: ./mkapp
+          token: ${{ secrets.ACTIONS }}

@@ -1,0 +1,8 @@
+Source: art
+Maintainer: peraMIC <opensource@peraMIC.io>
+Build-Depends: debhelper, golang:native, git, crossbuild-essential-armhf:all, libc6
+
+Package: art
+Architecture: any
+Depends: ${shlibs:Depends}, swagger-ui
+Description: Applicationm runtime service

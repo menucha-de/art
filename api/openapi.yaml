@@ -1,0 +1,238 @@
+
+openapi: 3.0.0
+info:
+  title: "Container Lifecycle Service"
+  version: "1.0.0"
+  description: "This files describes the container lifecycle service"
+  contact:
+    email: "opensource@peramic.io"
+servers:
+  - url: http://{mica-host}/art:8080/rest
+    description: MICA
+    variables:
+      mica-host:
+        default: mica-host
+        description: This value depends on the MICA on which the app is installed
+      container:
+        default: container
+        description: This value depends on the Container 
+security:
+  - basic_auth: []
+components:
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
+
+  schemas:
+  
+    Mount:
+      type: object
+      properties:
+        type:
+          type: string
+        source:
+          type: string
+        destination:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+            
+    Device:
+      type: object
+      properties:
+        path:
+          type: string
+          
+    Namespace:
+      type: object
+      properties:
+        type:
+          type: string
+  
+    Container:
+        type: object
+        properties:
+            id:
+               type: string
+            name:
+               type: string
+            label:
+               type: string
+            image:
+               type: string
+            user:
+               type: string
+            passwd:
+               type: string
+            trust:
+               type: boolean
+            state:
+               type: string
+               enum:
+                - STARTING
+                - STARTED
+                - STOPPING
+                - STOPPED
+            namespaces:
+               type: array
+               items: 
+                  $ref: '#/components/schemas/Namespace'
+            devices:
+               type: array
+               items:
+                  $ref: '#/components/schemas/Device'
+            mounts:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mount'
+      
+paths:
+  /namespaces:
+    get:
+      tags:
+        - namespaces
+      summary: Gets all namespaces
+      operationId: getNamespaces
+      responses:
+        "200":
+          description: List of namespaces managed by containerd instance
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  type: string
+  /namespaces/{ns}:
+    get:
+      tags:
+        - container
+      summary: Gets containers of namespaces
+      parameters:
+        - in: path
+          name: ns
+          schema:
+            type: string
+          required: true 
+          description: Namespace of container           
+      operationId: getContainers
+      responses:
+        "200":
+          description: List of containers managed by containerd instance in a namespace
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  type: string
+  /namespaces/{ns}/containers:
+    post:
+      tags:
+        - container
+      summary: Pulls image, creates container and start it 
+      parameters:
+        - in: path
+          name: ns
+          schema:
+            type: string
+          required: true 
+          description: Namespace of container
+      operationId: addContainer
+      requestBody:
+            content:
+               application/json:
+                  schema: 
+                   $ref: '#/components/schemas/Container'
+      responses:
+        "200":
+          description: Returns container information
+          content:
+            "application/json":
+              schema:
+                type: string 
+  
+  /namespaces/{ns}/containers/{container}:
+    get:
+      tags:
+        - container
+      summary: Gets container of namespaces
+      parameters:
+        - in: path
+          name: ns
+          schema:
+            type: string
+          required: true 
+          description: Namespace of container
+        - in: path
+          name: container
+          schema:
+            type: string
+          required: true 
+          description: Name of container
+      operationId: getContainer
+      responses:
+        "200":
+          description: Returns container information
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/Container'
+    put:
+      tags:
+        - container
+      summary: Update container image, re-init container
+      parameters:
+        - in: path
+          name: ns
+          schema:
+            type: string
+          required: true 
+          description: Namespace of container
+        - in: path
+          name: container
+          schema:
+            type: string
+          required: true 
+          description: Name of container
+      operationId: updateContainer
+      requestBody:
+            content:
+               application/json:
+                  schema: 
+                   $ref: '#/components/schemas/Container'
+      responses:
+        "200":
+          description: Returns container information
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/Container' 
+                
+    delete:
+      tags:
+        - container
+      summary: Stops container, removes container, removes image
+      parameters:
+        - in: path
+          name: ns
+          schema:
+            type: string
+          required: true 
+          description: Namespace of container
+        - in: path
+          name: container
+          schema:
+            type: string
+          required: true 
+          description: Name of container
+      operationId: deleteContainer
+      responses:
+        "200":
+          description: Returns container information
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/Container'                
+                
