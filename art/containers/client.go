@@ -5,7 +5,7 @@ import (
 	"github.com/menucha-de/utils"
 )
 
-const SystemdClient = "systemd:8080"
+const SystemdClient = "system:8080"
 
 type Client struct {
 	utils.Client
