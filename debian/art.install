@@ -1,2 +1,2 @@
-art /opt/menucha-de/
+target/art /opt/menucha-de/
 api/openapi.yaml /opt/menucha-de/www/

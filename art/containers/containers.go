@@ -35,7 +35,7 @@ import (
 	"github.com/google/uuid"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/opencontainers/runtime-spec/specs-go"
-	"github.com/menucha-de/App.Systemd/service"
+	"github.com/menucha-de/system/service"
 	"github.com/menucha-de/logging"
 	"github.com/txn2/txeh"
 )
