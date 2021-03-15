@@ -4,9 +4,9 @@
  * This files describes the app lifecycle service
  *
  * API version: 1.0.0
- * Contact: opensource@peramic.io
+ * Contact: info@menucha.de
  */
-package swagger
+package art
 
 import (
 	"net/http"

@@ -15,11 +15,11 @@ import (
 	"time"
 
 	"github.com/containerd/go-cni"
-	sw "github.com/peramic/App.Containerd/go"
-	"github.com/peramic/App.Containerd/go/containers"
-	"github.com/peramic/logging"
-	loglib "github.com/peramic/logging"
-	"github.com/peramic/utils"
+	art "github.com/menucha-de/art/art"
+	"github.com/menucha-de/art/art/containers"
+	"github.com/menucha-de/logging"
+	loglib "github.com/menucha-de/logging"
+	"github.com/menucha-de/utils"
 	"github.com/sirupsen/logrus"
 )
 
@@ -55,7 +55,7 @@ func main() {
 	}
 
 	if len(*res) > 0 {
-		updateExists, err := sw.GetClient().UpdateExists(*ns, *res, *user, *pwd)
+		updateExists, err := art.GetClient().UpdateExists(*ns, *res, *user, *pwd)
 		if err != nil {
 			log.Error("Failed to get image version for ", err)
 			os.Exit(-1)
@@ -71,7 +71,7 @@ func main() {
 
 	//Delete
 	if *d == true {
-		err := sw.GetClient().DeleteContainer(*ns, sw.GetClient().GetContainerIdByName(*ns, *containerName), *containerName)
+		err := art.GetClient().DeleteContainer(*ns, art.GetClient().GetContainerIdByName(*ns, *containerName), *containerName)
 		if err != nil {
 			log.Error("Failed to delete app ", err)
 			os.Exit(-1)
@@ -81,20 +81,20 @@ func main() {
 
 	if *clean {
 		if *all {
-			activeCs, err := sw.GetClient().GetContainers(*ns)
+			activeCs, err := art.GetClient().GetContainers(*ns)
 			if err != nil {
 				log.Error("Failed to get containers ", err)
 				os.Exit(-1)
 			}
 			for _, c := range activeCs {
-				err := sw.GetClient().DeleteInactive(*ns, c.Name)
+				err := art.GetClient().DeleteInactive(*ns, c.Name)
 				if err != nil {
 					log.Error("Failed to clean app of type ", c.Name, " ", err)
 					os.Exit(-1)
 				}
 			}
 		} else {
-			err := sw.GetClient().DeleteInactive(*ns, *containerName)
+			err := art.GetClient().DeleteInactive(*ns, *containerName)
 			if err != nil {
 				log.Error("Failed to clean app of type ", *containerName, " ", err)
 				os.Exit(-1)
@@ -102,7 +102,7 @@ func main() {
 		}
 
 		if *images {
-			err := sw.GetClient().CleanupImages(*ns)
+			err := art.GetClient().CleanupImages(*ns)
 			if err != nil {
 				log.Error("Failed to clean up images ", err)
 				os.Exit(-1)
@@ -135,7 +135,7 @@ func main() {
 			}
 		}
 
-		err = sw.GetClient().UpgradeContainers(*ns, sContainer)
+		err = art.GetClient().UpgradeContainers(*ns, sContainer)
 		if err != nil {
 			log.Error("Failed to upgrade ", err)
 			os.Exit(-1)
@@ -149,18 +149,18 @@ func main() {
 
 	//Container lc Start and network creation
 	if *start {
-		cId := sw.GetClient().GetContainerIdByName(*ns, *containerName)
+		cId := art.GetClient().GetContainerIdByName(*ns, *containerName)
 		if len(cId) < 1 {
 			log.Fatal("App ", *containerName, " unknown.")
 		}
-		c, err := sw.GetClient().GetContainer(*ns, cId)
+		c, err := art.GetClient().GetContainer(*ns, cId)
 		if err != nil {
 			log.Fatal("App ", *containerName, " not found in namespace ", *ns)
 		}
 
 		var ports []cni.PortMapping
 		if !c.IsHostNet {
-			ports, err = sw.GetClient().GetPortMapping(*ns, cId)
+			ports, err = art.GetClient().GetPortMapping(*ns, cId)
 			if err != nil {
 				log.WithError(err).Fatal("Failed to get portmapping for ", *containerName)
 			}
@@ -170,7 +170,7 @@ func main() {
 			}
 		}
 
-		task, tCh, err := sw.GetClient().StartContainer(*ns, cId)
+		task, tCh, err := art.GetClient().StartContainer(*ns, cId)
 		if err != nil {
 			log.WithError(err).Fatal("Failed to start app ", *containerName)
 		}
@@ -189,19 +189,19 @@ func main() {
 			}
 		}
 
-		sw.GetClient().StopContainer(*ns, cId, task)
+		art.GetClient().StopContainer(*ns, cId, task)
 		os.Exit(0)
 	}
 
 	log = loglib.GetLogger("art")
 
-	sw.AddRoutes(loglib.LogRoutes)
+	art.AddRoutes(loglib.LogRoutes)
 
-	router := sw.NewRouter()
+	router := art.NewRouter()
 
 	router.NotFoundHandler = http.HandlerFunc(notFound)
 
-	var s = new(sw.Service)
+	var s = new(art.Service)
 
 	rpcServer := rpc.NewServer()
 	rpcServer.Register(s)
@@ -215,7 +215,7 @@ func main() {
 
 	errs := make(chan error)
 
-	c := sw.GetClient()
+	c := art.GetClient()
 
 	if c.CClient == nil {
 		log.Fatal("Failed to init app client")

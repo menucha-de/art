@@ -4,16 +4,16 @@
  * This files describes the App lifecycle service
  *
  * API version: 1.0.0
- * Contact: opensource@peramic.io
+ * Contact: info@menucha.de
  */
-package swagger
+package art
 
 import (
 	"net/http"
 	"strings"
 
 	"github.com/gorilla/mux"
-	utils "github.com/peramic/utils"
+	utils "github.com/menucha-de/utils"
 )
 
 type Route struct {

@@ -4,5 +4,5 @@
 	dh $@
 
 override_dh_install:
-	CC=$(PREFIX)gcc LD=$(PREFIX)ld GOOS=linux GOARCH=$(GOARCH) GOARM=$(GOARM) CGO_ENABLED=1 go build -o art -ldflags="-extld=$(PREFIX)gcc"
+	CC=$(PREFIX)gcc LD=$(PREFIX)ld GOOS=linux GOARCH=$(GOARCH) GOARM=$(GOARM) CGO_ENABLED=1 go build -o target/art -ldflags="-extld=$(PREFIX)gcc"
 	dh_install

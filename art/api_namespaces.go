@@ -4,15 +4,15 @@
  * This files describes the App lifecycle service
  *
  * API version: 1.0.0
- * Contact: opensource@peramic.io
+ * Contact: info@menucha.de
  */
-package swagger
+package art
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/peramic/App.Containerd/go/containers"
+	"github.com/menucha-de/art/art/containers"
 )
 
 // GetNamespaces gets all available namespaces

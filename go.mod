@@ -1,4 +1,4 @@
-module github.com/peramic/App.Containerd
+module github.com/menucha-de/art
 
 go 1.14
 
@@ -25,9 +25,9 @@ require (
 	github.com/opencontainers/runc v0.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.0.2
 	github.com/opencontainers/selinux v1.6.0 // indirect
-	github.com/peramic/App.Systemd v0.0.0-20210303100303-bb2520b78be6
-	github.com/peramic/logging v0.0.0-20210302152621-d412952d23c1
-	github.com/peramic/utils v0.0.0-20210302153209-51de1f683749
+	github.com/menucha-de/system main
+	github.com/menucha-de/logging main
+	github.com/menucha-de/utils main
 	github.com/sirupsen/logrus v1.7.0
 	github.com/syndtr/gocapability v0.0.0-20200815063812-42c35b437635 // indirect
 	github.com/txn2/txeh v1.3.0

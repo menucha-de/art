@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         id: build
-        uses: peramic/actions/build@v1
+        uses: menucha-de/actions/build@v1
         with:
           arch: ${{ github.event.inputs.arch }}
           dist: ${{ github.event.inputs.dist }}

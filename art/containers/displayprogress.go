@@ -14,7 +14,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/opencontainers/go-digest"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
-	"github.com/peramic/logging"
+	"github.com/menucha-de/logging"
 )
 
 type wbSocketClients struct {

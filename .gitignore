@@ -1,6 +1,2 @@
-main
-www
-vendor
+/main
 log.db
-App.Containerd
-art

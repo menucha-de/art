@@ -1,5 +1,5 @@
 Source: art
-Maintainer: peraMIC <opensource@peraMIC.io>
+Maintainer: Menucha Team <info@menucha.de>
 Build-Depends: debhelper, golang:native, git, crossbuild-essential-armhf:all, libc6
 
 Package: art

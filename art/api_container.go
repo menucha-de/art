@@ -4,9 +4,9 @@
  * This files describes the app lifecycle service
  *
  * API version: 1.0.0
- * Contact: opensource@peramic.io
+ * Contact: info@menucha.de
  */
-package swagger
+package art
 
 import (
 	"bytes"
@@ -18,16 +18,16 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
-	"github.com/peramic/App.Containerd/go/containers"
-	"github.com/peramic/logging"
-	loglib "github.com/peramic/logging"
-	utils "github.com/peramic/utils"
+	"github.com/menucha-de/art/art/containers"
+	"github.com/menucha-de/logging"
+	loglib "github.com/menucha-de/logging"
+	utils "github.com/menucha-de/utils"
 )
 
 var log *loglib.Logger = loglib.GetLogger("art")
 var client containers.Client
 
-const SystemdClient = "systemd:8080"
+const SystemdClient = "system:8080"
 const dateTimeErrMsg = "Please check your date and time configuration under settings"
 
 // ContainersRequest for RPCs
